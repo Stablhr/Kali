@@ -27,7 +27,7 @@ export default function ImportExportPanel({ onClose }: { onClose: () => void }) 
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `schedflow-social-posts-${new Date().toISOString().slice(0, 10)}.json`
+    a.download = `kali-social-posts-${new Date().toISOString().slice(0, 10)}.json`
     a.click()
     URL.revokeObjectURL(url)
     setExporting(false)

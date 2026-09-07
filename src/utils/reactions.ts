@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'schedflow_user_comment_reactions'
+const STORAGE_KEY = 'kali_user_comment_reactions'
 
 type ReactionMap = Record<string, Record<string, string[]>>
 

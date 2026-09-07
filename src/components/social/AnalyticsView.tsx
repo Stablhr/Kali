@@ -84,7 +84,7 @@ export default function AnalyticsView() {
         </div>
         <button
           type="button"
-          onClick={() => downloadCsv(`schedflow-analytics-${toISODate(new Date())}.csv`, analyticsToCsv(socialPosts, allAnalytics))}
+          onClick={() => downloadCsv(`kali-analytics-${toISODate(new Date())}.csv`, analyticsToCsv(socialPosts, allAnalytics))}
           disabled={postedPosts.length === 0}
           className="ml-auto inline-flex items-center gap-1.5 rounded-md border border-border bg-surface px-2.5 py-1.5 text-xs font-medium text-text-secondary transition-colors hover:bg-surface-alt hover:text-text-primary disabled:opacity-40"
         >

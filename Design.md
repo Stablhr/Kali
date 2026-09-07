@@ -1,6 +1,6 @@
-# SchedFlow — Design System (v2)
+# Kali — Design System (v2)
 
-This document is the **single source of truth** for SchedFlow's visual language: a simple, professional, business-oriented SaaS design built around a turquoise brand accent on neutral surfaces. It applies to every screen — Dashboard, Sidebar, Boards, Card Modal, Share Modal, Inbox, Planner, forms, dropdowns.
+This document is the **single source of truth** for Kali's visual language: a simple, professional, business-oriented SaaS design built around a turquoise brand accent on neutral surfaces. It applies to every screen — Dashboard, Sidebar, Boards, Card Modal, Share Modal, Inbox, Planner, forms, dropdowns.
 
 **Core principle: professional clarity over visual effects.**
 
@@ -25,7 +25,7 @@ The interface should communicate organization, productivity, trust, reliability,
 11. **Responsive by default.** Desktop → mobile with readable type, adequate touch targets, intact hierarchy.
 12. **Business-oriented visual language.** Structured dashboards, clean navigation, scannable information density.
 
-### What SchedFlow is NOT
+### What Kali is NOT
 
 Not playful, not gaming-inspired, not neon/futuristic, not a glassmorphism showcase, not overly glossy or experimental. "Polished" means well organized — never decorated.
 

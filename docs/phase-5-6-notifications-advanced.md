@@ -43,7 +43,7 @@ Status: **Complete** (scoped for the current single-user/single-workspace archit
 
 ### Webhooks
 - `api/_lib/models/Webhook.ts` — `Webhook` + `WebhookEvent` models.
-- `api/_lib/webhooks.ts` — `dispatchWebhookEvent` with per-webhook events, HMAC-SHA256 `X-SchedFlow-Signature`, 10s timeout, delivery logging.
+- `api/_lib/webhooks.ts` — `dispatchWebhookEvent` with per-webhook events, HMAC-SHA256 `X-Kali-Signature`, 10s timeout, delivery logging.
 - `api/webhooks/index.ts` — CRUD; supported events: `post.scheduled | post.published | post.failed | post.cancelled`.
 - Dispatch wired into schedule, publish cron, and cancel endpoints.
 - `src/lib/api/webhooks.ts` + `src/components/social/WebhooksPanel.tsx` — UI to create/enable/delete.

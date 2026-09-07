@@ -1,7 +1,7 @@
 import type { AppData, Board, SocialPost, SocialPostPlatform } from './schema'
 import { emptyData } from './schema'
 
-export const STORAGE_KEY = 'schedflow_data'
+export const STORAGE_KEY = 'kali_data'
 export const SCHEMA_VERSION = 1
 
 function migrateBoard(board: Board): void {
@@ -61,7 +61,7 @@ export function clearData(): void {
 
 /* ── Social Posts persistence ─────────────────────────────── */
 
-const SOCIAL_POSTS_KEY = 'schedflow-social-posts'
+const SOCIAL_POSTS_KEY = 'kali-social-posts'
 const SOCIAL_POSTS_VERSION = 1
 
 function migrateSocialPostPlatform(p: Record<string, unknown>): SocialPostPlatform {

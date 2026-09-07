@@ -427,7 +427,7 @@ Expand `CardCover.tsx` into a right-side drawer (matching `BoardMenuDrawer` patt
 
 **Schema:** Add `reactions: Reactions` field to `CommentItem` interface (same shape as `card.reactions`).
 
-**`src/utils/reactions.ts`** (new): localStorage helpers keyed by `schedflow_user_comment_reactions`. Shape: `{ [cardId]: { [commentId]: string[] } }`.
+**`src/utils/reactions.ts`** (new): localStorage helpers keyed by `kali_user_comment_reactions`. Shape: `{ [cardId]: { [commentId]: string[] } }`.
 
 **CardComments.tsx changes:**
 - Each comment gets an "add reaction" icon button → opens compact emoji picker (search + frequently-used row).

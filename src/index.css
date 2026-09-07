@@ -3,7 +3,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ─────────────────────────────────────────────────────────────
-   SchedFlow Design System v2 — see Design.md (source of truth)
+   Kali Design System v2 — see Design.md (source of truth)
    Professional clarity over visual effects: solid surfaces,
    subtle borders, restrained shadows, turquoise as controlled
    accent. Glassmorphism / neumorphism / glow removed.

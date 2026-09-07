@@ -67,7 +67,7 @@ export function generateMockCaption(prompt: string): AIGenerateResult {
 
 export const MOCK_MODELS = ['mock-local'] as const
 
-const MOCK_TOKEN_USAGE_KEY = 'schedflow-ai-tokens'
+const MOCK_TOKEN_USAGE_KEY = 'kali-ai-tokens'
 export const MOCK_MONTHLY_TOKEN_LIMIT = 100000
 
 export function getTokenUsage(): number {

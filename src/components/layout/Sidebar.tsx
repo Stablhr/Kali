@@ -7,6 +7,7 @@ import CaptureBox from '../shared/CaptureBox'
 import Avatar from '../shared/Avatar'
 import StorageMeter from '../shared/StorageMeter'
 import type { ThemeMode } from '../../store/schema'
+import kaliLogo from '../../assets/kali-logo.png'
 
 const NAV = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard, end: true },
@@ -24,18 +25,14 @@ const THEME_OPTIONS: { value: ThemeMode; icon: typeof Sun; label: string }[] = [
 function Logo({ collapsed }: { collapsed: boolean }) {
   return (
     <div className="flex items-center gap-2.5 px-3 py-4">
-      <span
-        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground"
+      <img
+        src={kaliLogo}
+        alt="Kali logo"
+        className="h-8 w-8 shrink-0 rounded-lg"
         aria-hidden="true"
-      >
-        <svg viewBox="0 0 24 24" className="h-4.5 w-4.5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
-          <path d="M4 7h16" opacity="0.55" />
-          <path d="M4 12h16" />
-          <path d="M4 17h9" opacity="0.85" />
-        </svg>
-      </span>
+      />
       {!collapsed && (
-        <span className="text-[16px] font-bold tracking-tight" style={{ color: 'var(--surface-text)' }}>SchedFlow</span>
+        <span className="text-[16px] font-bold tracking-tight" style={{ color: 'var(--surface-text)' }}>Kali</span>
       )}
     </div>
   )

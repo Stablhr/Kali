@@ -50,10 +50,10 @@
 
 ### Persistence
 - **localStorage only** — 4 keys:
-  - `schedflow_data` — boards, lists, cards, inbox, members, UI
-  - `schedflow-social-posts` — `SocialPost[]` array
-  - `schedflow_user_comment_reactions` — per-comment emoji reactions
-  - `schedflow-ai-tokens` — AI token counter
+  - `kali_data` — boards, lists, cards, inbox, members, UI
+  - `kali-social-posts` — `SocialPost[]` array
+  - `kali_user_comment_reactions` — per-comment emoji reactions
+  - `kali-ai-tokens` — AI token counter
 - **5 MB browser limit**. Media stored as base64 data URLs (2 MB per-file cap)
 - **No IndexedDB, no cloud storage**
 
@@ -484,7 +484,7 @@ Worker: Upload to platform using media URL
 3. PUT video binary to session URI
 4. Receive video resource on completion (HTTP 201)
 
-**Key advantage:** YouTube's native scheduling means SchedFlow only needs to upload at the right time with the right `publishAt` value. No separate scheduler needed for YouTube.
+**Key advantage:** YouTube's native scheduling means Kali only needs to upload at the right time with the right `publishAt` value. No separate scheduler needed for YouTube.
 
 **App verification:** Since July 2020, all videos uploaded via unverified API projects are forced to private. Submit the [YouTube API Services Audit Form](https://support.google.com/youtube/contact/yt_api_form) for public uploads.
 
@@ -532,7 +532,7 @@ Worker: Upload to platform using media URL
 2. For video: poll `GET /{container_id}?fields=status_code` until `FINISHED`
 3. `POST /{ig-user-id}/media_publish` — publish container
 
-**Critical:** Containers expire after 24 hours. The container must be created at publish time, NOT when the user schedules the post. This means SchedFlow must store the payload and create the container when the scheduled time arrives.
+**Critical:** Containers expire after 24 hours. The container must be created at publish time, NOT when the user schedules the post. This means Kali must store the payload and create the container when the scheduled time arrives.
 
 **Idempotency issue:** `media_publish` can return HTTP 500 while the post actually succeeds (~10% false failures). Always check container `status_code` before retrying.
 
@@ -567,14 +567,14 @@ Worker: Upload to platform using media URL
 
 ### Platform Scheduling Summary
 
-| Platform | Native Scheduling | SchedFlow Must Implement |
+| Platform | Native Scheduling | Kali Must Implement |
 |---|---|---|
 | YouTube | YES (`publishAt` field) | Upload at scheduled time with `publishAt` metadata |
 | Facebook | YES (`scheduled_publish_time`) | Call API at schedule time with `published=false` |
 | Instagram | NO | Store payload; create container + publish at time |
 | TikTok | NO | Store payload; call Direct Post API at time |
 
-**Conclusion:** 2 of 4 platforms (Instagram, TikTok) require SchedFlow to implement its own scheduling engine. Even though YouTube and Facebook support native scheduling, a unified scheduler is needed to handle all platforms consistently, manage retries, and provide a single status source of truth.
+**Conclusion:** 2 of 4 platforms (Instagram, TikTok) require Kali to implement its own scheduling engine. Even though YouTube and Facebook support native scheduling, a unified scheduler is needed to handle all platforms consistently, manage retries, and provide a single status source of truth.
 
 ---
 
@@ -936,7 +936,7 @@ Backend: GET /api/auth/youtube/authorize
 Browser: Redirects to Google OAuth consent screen
     |
     v
-Google: User authorizes SchedFlow
+Google: User authorizes Kali
     |
     v
 Backend: GET /api/auth/youtube/callback?code=...&state=...

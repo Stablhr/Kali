@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import type { SocialMediaAttachment } from '../../store/schema'
 
-const STORAGE_KEY = 'schedflow-media-library'
+const STORAGE_KEY = 'kali-media-library'
 
 export interface MediaLibraryItem {
   id: string
