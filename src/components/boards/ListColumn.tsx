@@ -52,108 +52,107 @@ export default function ListColumn({ list, dragHandleProps, search, filter, onOp
     else setName(list.name)
   }
 
-  if (list.collapsed) {
-    return (
-      <div className="w-[46px] shrink-0">
-        <div
-          {...dragHandleProps}
-          onClick={() => {
-            setName(list.name)
-            setEditing(false)
-            toggleListCollapsed(list.id)
-          }}
-          title={list.name ? `${list.name} — click to expand` : 'Click to expand'}
-          className="flex h-full cursor-pointer items-center justify-center rounded-lg py-3 transition-colors duration-150"
-          style={{ ...vars, background: bg, border: `1px solid ${theme.border}` }}
-        >
-          <span
-            className="whitespace-nowrap text-xs font-semibold"
-            style={{ color: 'var(--surface-text-muted)', writingMode: 'vertical-rl' }}
-          >
-            {list.name}
-          </span>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div
-      className="flex w-[272px] shrink-0 flex-col rounded-xl"
+      className={`relative shrink-0 flex-col overflow-hidden rounded-xl transition-[width] duration-200 ease-in-out ${
+        list.collapsed ? 'w-[46px]' : 'w-[272px]'
+      }`}
       style={{ ...vars, background: bg, border: `1px solid ${theme.border}` }}
     >
+      {/* Collapsed name overlay */}
       <div
-        {...dragHandleProps}
-        className="group flex cursor-grab items-center gap-1 px-2 pb-1 pt-2.5 active:cursor-grabbing"
+        {...(list.collapsed ? dragHandleProps : undefined)}
+        onClick={list.collapsed ? () => { setName(list.name); setEditing(false); toggleListCollapsed(list.id) } : undefined}
+        title={list.collapsed ? (list.name ? `${list.name} — click to expand` : 'Click to expand') : undefined}
+        className={`absolute inset-0 z-10 flex items-center justify-center transition-opacity duration-200 ${
+          list.collapsed ? 'opacity-100 cursor-pointer' : 'pointer-events-none opacity-0'
+        }`}
       >
-        <GripVertical size={14} className="opacity-70" style={{ color: 'var(--surface-text-faint)' }} />
-        {editing ? (
-          <div className="flex items-center gap-1">
-            <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') commitRename()
-                if (e.key === 'Escape') {
-                  setName(list.name)
-                  setEditing(false)
-                }
-              }}
-              onBlur={commitRename}
-              autoFocus
-              className="w-32 rounded-md px-1 py-0.5 text-sm font-semibold outline-none ring-2 ring-primary/30"
-              style={{ color: 'var(--surface-text)', background: 'var(--surface-bg-subtle)' }}
-            />
-            <button
-              type="button"
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={commitRename}
-              className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground transition-colors duration-150 hover:bg-primary-hover"
-            >
-              <Check size={13} />
-            </button>
-          </div>
-        ) : (
-          <h3
-            onClick={() => {
-              setName(list.name)
-              setEditing(true)
-            }}
-            title="Click to rename"
-            className="flex-1 cursor-text truncate text-sm font-semibold"
-            style={{ color: 'var(--surface-text)' }}
-          >
-            {list.name}
-          </h3>
-        )}
-        <span className="font-mono text-[10.5px]" style={{ color: 'var(--surface-text-faint)' }}>{allCards.length}</span>
-        <ListMenu list={list} />
+        <span
+          className="whitespace-nowrap text-xs font-semibold"
+          style={{ color: 'var(--surface-text-muted)', writingMode: 'vertical-rl' }}
+        >
+          {list.name}
+        </span>
       </div>
 
-      {list.assignee && (
-        <p className="px-3 pb-1.5 text-[11px]" style={{ color: 'var(--surface-text-muted)' }}>by {list.assignee}</p>
-      )}
+      {/* Expanded content (always rendered for layout height) */}
+      <div className={`flex min-h-full flex-col transition-opacity duration-200 ${
+        list.collapsed ? 'pointer-events-none opacity-0' : 'opacity-100'
+      }`}>
+        <div
+          {...(!list.collapsed ? dragHandleProps : undefined)}
+          className="group flex cursor-grab items-center gap-1 px-2 pb-1 pt-2.5 active:cursor-grabbing"
+        >
+          <GripVertical size={14} className="opacity-70" style={{ color: 'var(--surface-text-faint)' }} />
+          {editing ? (
+            <div className="flex items-center gap-1">
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') commitRename()
+                  if (e.key === 'Escape') {
+                    setName(list.name)
+                    setEditing(false)
+                  }
+                }}
+                onBlur={commitRename}
+                autoFocus
+                className="w-32 rounded-md px-1 py-0.5 text-sm font-semibold outline-none ring-2 ring-primary/30"
+                style={{ color: 'var(--surface-text)', background: 'var(--surface-bg-subtle)' }}
+              />
+              <button
+                type="button"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={commitRename}
+                className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground transition-colors duration-150 hover:bg-primary-hover"
+              >
+                <Check size={13} />
+              </button>
+            </div>
+          ) : (
+            <h3
+              onClick={() => {
+                setName(list.name)
+                setEditing(true)
+              }}
+              title="Click to rename"
+              className="flex-1 cursor-text truncate text-sm font-semibold"
+              style={{ color: 'var(--surface-text)' }}
+            >
+              {list.name}
+            </h3>
+          )}
+          <span className="font-mono text-[10.5px]" style={{ color: 'var(--surface-text-faint)' }}>{allCards.length}</span>
+          <ListMenu list={list} />
+        </div>
 
-      <Droppable droppableId={list.id} type="CARD">
-        {(droppableProvided, snapshot) => (
-          <div
-            ref={droppableProvided.innerRef}
-            {...droppableProvided.droppableProps}
-            className={`scroll-slim flex max-h-[calc(100vh-220px)] min-h-2 flex-1 flex-col gap-1.5 overflow-y-auto rounded-b-xl px-2 pb-2 sm:max-h-[calc(100vh-180px)] ${
-              snapshot.isDraggingOver ? 'bg-black/[0.04] ring-2 ring-inset ring-primary dark:bg-white/[0.06]' : ''
-            }`}
-            style={{
-              transition: 'background-color 0.15s ease',
-            }}
-          >
-            {cards.map((card, index) => (
-              <CardFace key={card.id} card={card} index={index} onOpenCard={onOpenCard} />
-            ))}
-            {droppableProvided.placeholder}
-            <AddCardForm listId={list.id} />
-          </div>
+        {list.assignee && (
+          <p className="px-3 pb-1.5 text-[11px]" style={{ color: 'var(--surface-text-muted)' }}>by {list.assignee}</p>
         )}
-      </Droppable>
+
+        <Droppable droppableId={list.id} type="CARD">
+          {(droppableProvided, snapshot) => (
+            <div
+              ref={droppableProvided.innerRef}
+              {...droppableProvided.droppableProps}
+              className={`scroll-slim flex max-h-[calc(100vh-220px)] min-h-2 flex-1 flex-col gap-1.5 overflow-y-auto rounded-b-xl px-2 pb-2 sm:max-h-[calc(100vh-180px)] ${
+                snapshot.isDraggingOver ? 'bg-black/[0.04] ring-2 ring-inset ring-primary dark:bg-white/[0.06]' : ''
+              }`}
+              style={{
+                transition: 'background-color 0.15s ease',
+              }}
+            >
+              {cards.map((card, index) => (
+                <CardFace key={card.id} card={card} index={index} onOpenCard={onOpenCard} />
+              ))}
+              {droppableProvided.placeholder}
+              <AddCardForm listId={list.id} />
+            </div>
+          )}
+        </Droppable>
+      </div>
     </div>
   )
 }
