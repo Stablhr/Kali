@@ -22,10 +22,10 @@ export default function PlannerPreview() {
           This week
         </h2>
         <Link
-          to="/planner"
+          to="/schedule"
           className="ml-auto text-xs font-semibold text-primary-hover hover:underline"
         >
-          Open planner
+          Open schedule
         </Link>
       </div>
 
@@ -36,7 +36,7 @@ export default function PlannerPreview() {
           return (
             <Link
               key={toISODate(day)}
-              to="/planner"
+              to="/schedule"
               title={`${count} card${count === 1 ? '' : 's'} on ${day.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}`}
               className={`flex flex-col items-center rounded-md px-0.5 py-1.5 transition-colors duration-150 hover:bg-primary-subtle sm:px-1 sm:py-2 ${
                 count > 0 ? 'bg-primary-subtle/60 dark:bg-primary-subtle/30' : 'bg-surface-alt'

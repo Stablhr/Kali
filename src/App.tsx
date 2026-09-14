@@ -18,12 +18,6 @@ import PlannerView from './components/planner/PlannerView'
 import PlannerViewSkeleton from './components/planner/PlannerViewSkeleton'
 import ContentPlannerView from './components/content-planner/ContentPlannerView'
 import ContentPlannerSkeleton from './components/content-planner/ContentPlannerSkeleton'
-import SocialDashboard from './components/social/SocialDashboard'
-import SocialDashboardSkeleton from './components/social/SocialDashboardSkeleton'
-import SocialCalendarView from './components/social/SocialCalendarView'
-import SocialCalendarSkeleton from './components/social/SocialCalendarSkeleton'
-import AnalyticsView from './components/social/AnalyticsView'
-import AnalyticsSkeleton from './components/social/AnalyticsSkeleton'
 import ContrastTestPage from './components/dev/ContrastTestPage'
 
 function ErrorToast() {
@@ -86,42 +80,19 @@ export default function App() {
                 }
               />
               <Route
-                path="/planner"
+                path="/schedule"
                 element={
                   <LazyLoad skeleton={<PlannerViewSkeleton />}>
                     <PlannerView />
                   </LazyLoad>
                 }
               />
-              <Route
-                path="/social"
-                element={
-                  <LazyLoad skeleton={<SocialDashboardSkeleton />}>
-                    <SocialDashboard />
-                  </LazyLoad>
-                }
-              />
+              <Route path="/planner" element={<Navigate to="/schedule" replace />} />
               <Route
                 path="/content-planner"
                 element={
                   <LazyLoad skeleton={<ContentPlannerSkeleton />}>
                     <ContentPlannerView />
-                  </LazyLoad>
-                }
-              />
-              <Route
-                path="/social/calendar"
-                element={
-                  <LazyLoad skeleton={<SocialCalendarSkeleton />}>
-                    <SocialCalendarView />
-                  </LazyLoad>
-                }
-              />
-              <Route
-                path="/social/analytics"
-                element={
-                  <LazyLoad skeleton={<AnalyticsSkeleton />}>
-                    <AnalyticsView />
                   </LazyLoad>
                 }
               />

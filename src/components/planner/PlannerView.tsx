@@ -56,7 +56,7 @@ export default function PlannerView() {
   return (
     <div className="flex h-full flex-col">
       <div className="flex flex-wrap items-center gap-2 border-b border-border bg-surface px-3 py-2 sm:px-4 sm:py-3">
-        <h1 className="text-lg font-semibold text-text-primary sm:text-xl">Planner</h1>
+        <h1 className="text-lg font-semibold text-text-primary sm:text-xl">Schedule</h1>
 
         <div className="ml-2 flex items-center gap-1 sm:ml-4">
           <button

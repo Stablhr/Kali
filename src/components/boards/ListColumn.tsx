@@ -19,7 +19,7 @@ interface ListColumnProps {
 }
 
 export default function ListColumn({ list, dragHandleProps, search, filter, onOpenCard }: ListColumnProps) {
-  const { data, renameList } = useStore()
+  const { data, renameList, toggleListCollapsed } = useStore()
   const [editing, setEditing] = useState(false)
   const [name, setName] = useState(list.name)
 
@@ -60,8 +60,9 @@ export default function ListColumn({ list, dragHandleProps, search, filter, onOp
           onClick={() => {
             setName(list.name)
             setEditing(false)
+            toggleListCollapsed(list.id)
           }}
-          title={list.name}
+          title={list.name ? `${list.name} — click to expand` : 'Click to expand'}
           className="flex h-full cursor-pointer items-center justify-center rounded-lg py-3 transition-colors duration-150"
           style={{ ...vars, background: bg, border: `1px solid ${theme.border}` }}
         >
