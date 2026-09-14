@@ -58,3 +58,9 @@ export function toISODate(date: Date): string {
 export function isSameDay(a: Date, b: Date): boolean {
   return toISODate(a) === toISODate(b)
 }
+
+export function formatHour(hour: number): string {
+  if (hour === 0 || hour === 24) return '12 AM'
+  if (hour === 12) return '12 PM'
+  return hour < 12 ? `${hour} AM` : `${hour - 12} PM`
+}

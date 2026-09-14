@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, Inbox, Columns3, CalendarDays, Share2, Sun, Moon } from 'lucide-react'
+import { LayoutDashboard, Inbox, Columns3, CalendarDays, Share2, Sun, Moon, CalendarRange } from 'lucide-react'
 import { useStore } from '../../store/useStore'
 import { useAdaptiveTheme, adaptiveVars } from '../../hooks/useAdaptiveTheme'
 import { useThemeMode } from '../../hooks/useThemeMode'
@@ -14,6 +14,7 @@ const NAV = [
   { to: '/inbox', label: 'Inbox', icon: Inbox },
   { to: '/boards', label: 'Boards', icon: Columns3 },
   { to: '/planner', label: 'Planner', icon: CalendarDays },
+  { to: '/content-planner', label: 'Content Planner', icon: CalendarRange },
   { to: '/social', label: 'Social', icon: Share2 },
 ]
 

@@ -16,6 +16,8 @@ import BoardView from './components/boards/BoardView'
 import BoardViewSkeleton from './components/boards/BoardViewSkeleton'
 import PlannerView from './components/planner/PlannerView'
 import PlannerViewSkeleton from './components/planner/PlannerViewSkeleton'
+import ContentPlannerView from './components/content-planner/ContentPlannerView'
+import ContentPlannerSkeleton from './components/content-planner/ContentPlannerSkeleton'
 import SocialDashboard from './components/social/SocialDashboard'
 import SocialDashboardSkeleton from './components/social/SocialDashboardSkeleton'
 import SocialCalendarView from './components/social/SocialCalendarView'
@@ -96,6 +98,14 @@ export default function App() {
                 element={
                   <LazyLoad skeleton={<SocialDashboardSkeleton />}>
                     <SocialDashboard />
+                  </LazyLoad>
+                }
+              />
+              <Route
+                path="/content-planner"
+                element={
+                  <LazyLoad skeleton={<ContentPlannerSkeleton />}>
+                    <ContentPlannerView />
                   </LazyLoad>
                 }
               />

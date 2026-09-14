@@ -101,7 +101,13 @@ function PlatformOverridePanel({ platform, postPlatform, onChange }: {
   )
 }
 
-export default function ComposeModal({ post, initialDate, initialCardId, onClose }: { post: SocialPost | null; initialDate?: string; initialCardId?: string; onClose: () => void }) {
+export default function ComposeModal({ post, initialDate, initialTime, initialCardId, onClose }: {
+  post: SocialPost | null
+  initialDate?: string
+  initialTime?: string
+  initialCardId?: string
+  onClose: () => void
+}) {
   const { addSocialPost, updateSocialPost, removeMediaFromPost, scheduleSocialPost } = useStore()
 
   const [title, setTitle] = useState(post?.title ?? '')
@@ -113,7 +119,7 @@ export default function ComposeModal({ post, initialDate, initialCardId, onClose
     new Map(post?.platforms.map((p) => [p.platform, p]) ?? [])
   )
   const [scheduledDate, setScheduledDate] = useState(post?.scheduledDate ?? initialDate ?? '')
-  const [scheduledTime, setScheduledTime] = useState(post?.scheduledTime ?? '')
+  const [scheduledTime, setScheduledTime] = useState(post?.scheduledTime ?? initialTime ?? '')
   const [timezone, setTimezone] = useState(post?.timezone ?? getBrowserTimezone())
   const [repeat, setRepeat] = useState<SocialPost['repeat']>(post?.repeat ?? 'none')
   const [repeatUntil, setRepeatUntil] = useState(post?.repeatUntil ?? '')
