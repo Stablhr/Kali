@@ -54,8 +54,8 @@ export default function ListColumn({ list, dragHandleProps, search, filter, onOp
 
   return (
     <div
-      className={`relative shrink-0 flex-col overflow-hidden rounded-xl transition-[width] duration-200 ease-in-out ${
-        list.collapsed ? 'w-[46px]' : 'w-[272px]'
+      className={`relative shrink-0 flex-col rounded-xl transition-[width] duration-200 ease-in-out ${
+        list.collapsed ? 'w-[46px] overflow-hidden' : 'w-[272px]'
       }`}
       style={{ ...vars, background: bg, border: `1px solid ${theme.border}` }}
     >
