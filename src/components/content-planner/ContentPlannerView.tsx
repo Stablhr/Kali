@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useCallback, useRef } from 'react'
+import type { MouseEvent as ReactMouseEvent } from 'react'
 import { DragDropContext } from '@hello-pangea/dnd'
 import type { DropResult } from '@hello-pangea/dnd'
-import { CalendarRange, ChevronLeft, ChevronRight, BarChart3, Lightbulb, X } from 'lucide-react'
+import { CalendarRange, ChevronLeft, ChevronRight, BarChart3, Lightbulb, GripVertical, X } from 'lucide-react'
 import { useStore } from '../../store/useStore'
 import type { SocialPost } from '../../store/schema'
 import { addDays, formatDate, startOfWeek, toISODate } from '../../utils/dates'
@@ -19,6 +20,7 @@ import { hourToTime, parseSlotId } from './types'
 import type { PlatformFilter, SidebarTab } from './types'
 
 const DAY_COUNT = 7
+const MIN_CALENDAR_WIDTH = 820
 
 export default function ContentPlannerView() {
   const { socialPosts, moveSocialPost } = useStore()
@@ -32,6 +34,41 @@ export default function ContentPlannerView() {
   const [sidebarTab, setSidebarTab] = useState<SidebarTab | null>('engagement')
   const [bulkOpen, setBulkOpen] = useState(false)
   const [accountsOpen, setAccountsOpen] = useState(false)
+
+  const [calendarWidth, setCalendarWidth] = useState<number | null>(null)
+  const isDragging = useRef(false)
+  const dragStartX = useRef(0)
+  const dragStartWidth = useRef(0)
+
+  const handleDragStart = useCallback(
+    (e: ReactMouseEvent) => {
+      isDragging.current = true
+      dragStartX.current = e.clientX
+      dragStartWidth.current = calendarWidth ?? MIN_CALENDAR_WIDTH
+      e.preventDefault()
+
+      const handleMove = (ev: MouseEvent) => {
+        if (!isDragging.current) return
+        const delta = ev.clientX - dragStartX.current
+        const newWidth = Math.max(MIN_CALENDAR_WIDTH, dragStartWidth.current + delta)
+        setCalendarWidth(newWidth)
+      }
+
+      const handleUp = () => {
+        isDragging.current = false
+        document.removeEventListener('mousemove', handleMove)
+        document.removeEventListener('mouseup', handleUp)
+        document.body.style.cursor = ''
+        document.body.style.userSelect = ''
+      }
+
+      document.addEventListener('mousemove', handleMove)
+      document.addEventListener('mouseup', handleUp)
+      document.body.style.cursor = 'col-resize'
+      document.body.style.userSelect = 'none'
+    },
+    [calendarWidth],
+  )
 
   const days = Array.from({ length: DAY_COUNT }, (_, i) => addDays(weekStart, i))
 
@@ -185,11 +222,21 @@ export default function ContentPlannerView() {
         <DragDropContext onDragEnd={onDragEnd}>
           <div className="scroll-slim flex h-full min-h-0 gap-3 overflow-x-auto p-3">
             <ContentUnscheduledPool posts={poolPosts} onPostClick={handlePostClick} />
+            <div
+              className="flex shrink-0 items-center"
+              onMouseDown={handleDragStart}
+              title="Drag to resize calendar"
+            >
+              <div className="mx-0.5 flex h-8 w-1.5 cursor-col-resize items-center justify-center rounded-full text-text-muted transition-colors hover:bg-border hover:text-text-secondary">
+                <GripVertical size={12} />
+              </div>
+            </div>
             <WeeklyTimeGrid
               days={days}
               posts={gridPosts}
               onPostClick={handlePostClick}
               onSlotClick={handleSlotClick}
+              style={calendarWidth != null ? { width: calendarWidth, flex: 'none' } : undefined}
             />
           </div>
         </DragDropContext>

@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { useState, useEffect } from 'react'
 import type { SocialPost } from '../../store/schema'
 import { toISODate, formatHour, isSameDay } from '../../utils/dates'
@@ -9,11 +10,12 @@ interface WeeklyTimeGridProps {
   posts: SocialPost[]
   onPostClick: (post: SocialPost) => void
   onSlotClick: (date: string, hour: number) => void
+  style?: CSSProperties
 }
 
 const HOURS = Array.from({ length: END_HOUR - START_HOUR + 1 }, (_, i) => START_HOUR + i)
 
-export default function WeeklyTimeGrid({ days, posts, onPostClick, onSlotClick }: WeeklyTimeGridProps) {
+export default function WeeklyTimeGrid({ days, posts, onPostClick, onSlotClick, style }: WeeklyTimeGridProps) {
   const [now, setNow] = useState(new Date())
 
   useEffect(() => {
@@ -45,7 +47,7 @@ export default function WeeklyTimeGrid({ days, posts, onPostClick, onSlotClick }
   }
 
   return (
-    <div className="scroll-slim flex min-h-0 min-w-[820px] flex-1 flex-col overflow-y-auto">
+    <div className="scroll-slim flex min-h-0 min-w-[820px] flex-1 flex-col overflow-y-auto" style={style}>
       {/* Day headers */}
       <div className="sticky top-0 z-10 flex border-b border-border bg-surface">
         <div className="w-12 shrink-0 border-r border-border" />
